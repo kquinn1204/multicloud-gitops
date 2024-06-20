@@ -1,0 +1,21 @@
+pacman:
+  image: quay.io/rhn_support_kquinn/pacman-nodejs-app:latest
+  replicas: 1
+
+mongodb:
+  image: centos/mongodb-36-centos7
+  replicas: 1
+  adminPassword: clyde
+  database: pacman
+  user: blinky
+  password: pinky
+
+secrets:
+  databaseAdminPassword: Y2x5ZGU=
+  databaseName: cGFjbWFu
+  databasePassword: cGlua3k=
+  databaseUser: Ymxpbmt5
+  keyfileValue: cjNkaDR0Cg==
+
+pvc:
+  storage: 8Gi

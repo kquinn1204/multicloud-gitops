@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  namespace: pacman
+  labels:
+    app: pacman
+spec:
+  replicas: {{ .Values.mongodb.replicas }}
+  selector:
+    matchLabels:
+      app: pacman
+  template:
+    metadata:
+      labels:
+        app: pacman
+    spec:
+      serviceAccountName: pacman
+      volumes:
+        - name: mongodb-data
+          persistentVolumeClaim:
+            claimName: mongodb
+      containers:
+        - name: mongodb-pacman
+          image: {{ .Values.mongodb.image }}
+          env:
+            - name: MONGODB_ADMIN_PASSWORD
+              value: {{ .Values.mongodb.adminPassword }}
+            - name: MONGODB_DATABASE
+              value: {{ .Values.mongodb.database }}
+            - name: MONGODB_PASSWORD
+              value: {{ .Values.mongodb.password }}
+            - name: MONGODB_USER
+              value: {{ .Values.mongodb.user }}
+          ports:
+            - containerPort: 27017
+              protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -i
+                - -c
+                - mongo 127.0.0.1:27017/$MONGODB_DATABASE -u $MONGODB_USER -p $MONGODB_PASSWORD --eval="quit()"
+          volumeMounts:
+            - mountPath: /var/lib/mongodb/data
+              name: mongodb-data
