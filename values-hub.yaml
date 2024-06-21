@@ -2,6 +2,7 @@ clusterGroup:
   name: hub
   isHubCluster: true
   namespaces:
+    - pacman
     - open-cluster-management
     - vault
     - golang-external-secrets
@@ -14,6 +15,7 @@ clusterGroup:
       channel: release-2.10
       #csv: advanced-cluster-management.v2.6.1
   projects:
+    - pacman
     - hub
     - config-demo
     - hello-world
@@ -68,6 +70,11 @@ clusterGroup:
       namespace: hello-world
       project: hello-world
       path: charts/all/hello-world
+    pacman:
+      name: pacman
+      namespace: pacman
+      project: pacman
+      path: charts/all/pacman
   imperative:
     # NOTE: We *must* use lists and not hashes. As hashes lose ordering once parsed by helm
     # The default schedule is every 10 minutes: imperative.schedule
