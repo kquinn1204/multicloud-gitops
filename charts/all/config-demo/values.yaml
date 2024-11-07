@@ -6,6 +6,9 @@ secretStore:
 configdemosecret:
   key: secret/data/global/config-demo
 
+configdemomysecret:
+  key: secret/data/global/config-demo
+
 global:
   hubClusterDomain: hub.example.com
   localClusterDomain: region-one.example.com
